@@ -149,9 +149,27 @@ tesla.budget
 
 struct Zoo {
     var animals: [Animal]
+    
     var animalSitters: [AnimalSitter]
-    var dailyWaterLimit: Int
-    var budget: Int
+    var dailyWaterLimit: Int {
+        didSet {
+            animals.map { animal in
+                self.dailyWaterLimit -= animal.waterConsumption
+            }
+        }
+    }
+    var budget: Int {
+        didSet {
+            animalSitters.map { sitter in
+                self.budget -= sitter.salary
+                if self.budget <= 0 {
+                    print("Insufficient Budget")
+                }
+            }
+        }
+    }
+    
+   
 }
 
 protocol Animal {
@@ -162,5 +180,14 @@ protocol Animal {
 
 struct AnimalSitter {
     var animal: [Animal]
-    
+    var salary: Int {
+        didSet {
+            self.salary = age * experienceYear * 100
+        }
+    }
+    var age: Int
+    var experienceYear: Int
+    let name: String?
 }
+
+
