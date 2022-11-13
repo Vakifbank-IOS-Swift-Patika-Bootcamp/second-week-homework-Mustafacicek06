@@ -1,6 +1,5 @@
 import Foundation
 
-
  struct Company {
     var companyName: String
     var employee: [Employee]
@@ -153,9 +152,12 @@ struct Zoo {
     var animalSitters: [AnimalSitter]
     var dailyWaterLimit: Int {
         didSet {
-            animals.map { animal in
-                self.dailyWaterLimit -= animal.waterConsumption
-            }
+            
+                animals.map { animal in
+                    self.dailyWaterLimit -= animal.waterConsumption
+                }
+            
+            
         }
     }
     var budget: Int {
@@ -169,14 +171,63 @@ struct Zoo {
         }
     }
     
+    
+    
    
 }
 
 protocol Animal {
     var waterConsumption: Int {get set}
     var animalVoice: String {get set}
-    var animalSitter: AnimalSitter {get set}
+    var animalSitter: AnimalSitter? {get set}
+    
+    mutating func setAnimalSitter (animalSitter: AnimalSitter)
+    
 }
+
+class Dog: Animal {
+    
+    
+    var waterConsumption: Int = 20
+    var animalVoice: String = "Hav Hav!!"
+    var animalSitter: AnimalSitter?
+    var featherColor: String?
+    
+    init(waterConsumption: Int?, animalVoice: String?, animalSitter: AnimalSitter?, featherColor: String?) {
+        self.waterConsumption = waterConsumption ?? 15
+        self.animalSitter = animalSitter
+        self.featherColor = featherColor
+        self.animalVoice = animalVoice ?? "Hav hav!"
+    }
+    
+      func setAnimalSitter(animalSitter sitter: AnimalSitter) {
+        self.animalSitter = sitter
+    }
+}
+
+class Cat: Animal {
+       
+    var waterConsumption: Int
+    var animalVoice: String
+    var animalSitter: AnimalSitter?
+    var featherColor: String?
+    
+    init(waterConsumption: Int?, animalVoice: String?, animalSitter: AnimalSitter?, featherColor: String?) {
+        self.waterConsumption = waterConsumption ?? 10
+        self.animalSitter = animalSitter
+        self.featherColor = featherColor
+        self.animalVoice = animalVoice ?? "Miyavv"
+    }
+    
+    func setAnimalSitter(animalSitter sitter: AnimalSitter) {
+        self.animalSitter = sitter
+    }
+    
+    
+    
+}
+
+
 
 struct AnimalSitter {
     var animal: [Animal]
@@ -187,7 +238,25 @@ struct AnimalSitter {
     }
     var age: Int
     var experienceYear: Int
-    let name: String?
+    var name: String?
 }
+
+var animalSitter = AnimalSitter(animal: animals, salary: 10, age: 20, experienceYear: 3, name: "jhon")
+
+
+var animals: [Animal] =  [
+    Cat(waterConsumption: 10, animalVoice: "miyav", animalSitter: animalSitter, featherColor: "gray"),
+    Cat(waterConsumption: 12, animalVoice: "miyav", animalSitter: animalSitter, featherColor: "orange"),
+  Dog(waterConsumption: 15, animalVoice: "Hav hav!", animalSitter: animalSitter, featherColor: "black")
+]
+
+
+var zoo: Zoo = Zoo(animals: animals, animalSitters: [animalSitter], dailyWaterLimit: 350, budget: 150000)
+
+
+
+
+
+
 
 
