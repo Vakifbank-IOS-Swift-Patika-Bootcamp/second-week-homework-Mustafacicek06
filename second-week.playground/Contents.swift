@@ -1,5 +1,6 @@
 import Foundation
 
+// MARK: COMPANY
  struct Company {
     var companyName: String
     var employee: [Employee]
@@ -24,9 +25,13 @@ import Foundation
     
 }
 
-enum EmployeeType: Int {case junior = 1,mid,senior,architecture,manager}
+// Employe type - jr. mid sr bla bla.
+enum EmployeeType: Int {case junior = 1,mid,senior,manager}
+
+// employe civil status enum
 enum CivilStatus {case married,single}
 
+// employe protocol
 protocol Employee {
     var name: String {get set}
     var age: Int {get set}
@@ -35,6 +40,7 @@ protocol Employee {
     func calculateEmployeeSalary (employeeAge age: Int) -> Int
 }
 
+// MARK: EMPLOYEES
 struct JuniorEmployee: Employee {
     
     
@@ -88,23 +94,7 @@ struct SeniorEmployee: Employee {
     
 }
 
-struct ArchitectureEmployee: Employee {
-    var name: String
-    
-    var age: Int
-    
-    var civilStatus: CivilStatus
-    
-    var experienceSectorYear: Int?
-    
-    func calculateEmployeeSalary(employeeAge age: Int) -> Int {
-        return age * EmployeeType.architecture.rawValue * 500
-    }
-    
-  
-    
-    
-}
+
 
 struct ManagerEmployee: Employee {
     var experienceSectorYear: Int?
@@ -122,6 +112,7 @@ struct ManagerEmployee: Employee {
     
 }
 
+// all company employee
 var employees: [Employee] = [
     JuniorEmployee(name: "Elon Musk", age: 45, civilStatus: .single),
     JuniorEmployee(name: "Hasan Yatar", age: 22, civilStatus: .single),
@@ -129,12 +120,15 @@ var employees: [Employee] = [
     
 ]
 
-var mustafaCicek = ArchitectureEmployee(name: "Mustafa Cicek", age: 22, civilStatus: .single)
+// employe add
+var mustafaCicek = ManagerEmployee(name: "Mustafa Cicek", age: 22, civilStatus: .single)
 
+// company
 var tesla = Company(companyName: "tesla", employee: employees , budget: 150000, foundationYear: 2000)
 
 
 tesla.budget
+// employe salary calculate
 tesla.employeeSalaryPayment()
 tesla.budget
 
